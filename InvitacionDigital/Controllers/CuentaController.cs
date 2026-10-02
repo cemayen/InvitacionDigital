@@ -1,5 +1,6 @@
 ﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting; // <-- Necesario para IWebHostEnvironment
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InvitacionDigital.Models;
@@ -11,10 +12,12 @@ namespace InvitacionDigital.Controllers
     public class CuentaController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly IWebHostEnvironment _env;
 
-        public CuentaController(ApplicationDbContext context)
+        public CuentaController(ApplicationDbContext context, IWebHostEnvironment env)
         {
             _context = context;
+            _env = env;
         }
 
         // GET: /Cuenta/Index
@@ -107,28 +110,29 @@ namespace InvitacionDigital.Controllers
         [HttpGet]
         public async Task<IActionResult> DescargarBoleto(int id)
         {
-            // Obtener usuario autenticado desde Claims
             var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!int.TryParse(userIdClaim, out int usuarioId))
-            {
                 return RedirectToAction("InicioSesion", "Autentificacion");
-            }
 
-            // Buscar el boleto/invitado verificando que pertenezca a la familia logueada
             var invitado = await _context.Invitados
                 .Include(i => i.Usuario)
                 .FirstOrDefaultAsync(i => i.Id == id && i.UsuarioId == usuarioId);
 
             if (invitado == null || string.IsNullOrWhiteSpace(invitado.NombreCompleto))
             {
-                TempData["Error"] = "Boleto no encontrado o aún no ha sido confirmado con un nombre.";
+                TempData["Error"] = "El boleto aún no tiene nombre asignado.";
                 return RedirectToAction("Index");
             }
 
-            // Generar el archivo PDF
-            byte[] pdfBytes = BoletoPdfService.GenerarBoletoPdf(invitado.Usuario.NombreFamilia, invitado.NombreCompleto);
+            // Construir la ruta física a la imagen Boleto.png
+            string rutaImagen = Path.Combine(_env.WebRootPath, "assets", "imgs", "Boleto2.png");
 
-            // Retornar archivo PDF para descarga en el navegador
+            byte[] pdfBytes = BoletoPdfService.GenerarBoletoPdf(
+                invitado.Usuario?.NombreFamilia ?? "Invitado",
+                invitado.NombreCompleto,
+                rutaImagen
+            );
+
             string nombreArchivo = $"Boleto_{invitado.NombreCompleto.Replace(" ", "_")}.pdf";
             return File(pdfBytes, "application/pdf", nombreArchivo);
         }

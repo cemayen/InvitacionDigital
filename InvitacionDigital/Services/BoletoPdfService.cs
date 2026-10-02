@@ -6,60 +6,52 @@ namespace InvitacionDigital.Services
 {
     public class BoletoPdfService
     {
-        public static byte[] GenerarBoletoPdf(string nombreFamilia, string nombreInvitado)
+        public static byte[] GenerarBoletoPdf(string nombreFamilia, string nombreInvitado, string rutaImagenWwwroot)
         {
-            // Configurar licencia comunitaria gratuita de QuestPDF
             QuestPDF.Settings.License = LicenseType.Community;
 
-            var documento = Document.Create(container =>
+            var colorFondoHex = "#f5f3e2";
+
+            return Document.Create(container =>
             {
                 container.Page(page =>
                 {
-                    // Tamaño personalizado para el boleto (ej. Pase tipo tarjeta vertical u horizontal)
-                    page.Size(PageSizes.A6.Landscape());
-                    page.Margin(15);
-                    page.PageColor(Colors.Grey.Lighten4);
-                    page.DefaultTextStyle(x => x.FontSize(12).FontColor(Colors.Grey.Darken3));
+                    // Dimensiones proporcionales a 993x567 px (convertidos a puntos pt)
+                    page.Size(new PageSize(745, 425));
+                    page.Margin(0);
+                    page.PageColor(colorFondoHex);
 
-                    page.Content().Border(1)
-                        .BorderColor(Colors.Grey.Medium)
-                        .Background(Colors.White)
-                        .Padding(20)
-                        .Column(column =>
+                    page.Content().Layers(layers =>
+                    {
+                        // Capa 1 (Fondo): La imagen del boleto
+                        var fondo = layers.PrimaryLayer().Width(745).Height(425);
+                        if (System.IO.File.Exists(rutaImagenWwwroot))
                         {
-                            column.Spacing(10);
+                            fondo.Image(rutaImagenWwwroot).FitArea();
+                        }
 
-                            // Encabezado
-                            column.Item().Text("PASE DERECHO DE ENTRADA")
-                                .FontSize(16)
-                                .Bold()
-                                .AlignCenter()
-                                .FontColor(Colors.Amber.Darken3);
-
-                            column.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten2);
-
-                            // Nombre de la Familia
-                            column.Item().Text(text =>
+                        // Capa 2 (Superpuesta): Nombre del invitado en la esquina inferior derecha
+                        layers.Layer()
+                            .PaddingLeft(110)
+                            .PaddingBottom(30)
+                            .AlignBottom()
+                            .AlignLeft()
+                            .Column(col =>
                             {
-                                text.Span("Familia: ").Bold();
-                                text.Span(nombreFamilia);
+                                col.Item().Text(nombreInvitado)
+                                    .FontSize(13)
+                                    .FontColor("#5c5c5c")
+                                    .AlignLeft(); // Corregido: AlignRight en lugar de RightAlign
+
+                                col.Item().PaddingTop(4).Text($"Familia {nombreFamilia}")
+                                    .FontSize(12)
+                                    .FontColor("#d7b590")
+                                    .AlignLeft(); // Corregido: AlignRight en lugar de RightAlign
+                                    
                             });
-
-                            // Nombre del Invitado (Asistente)
-                            column.Item().Background(Colors.Grey.Lighten3)
-                                .Padding(10)
-                                .Column(invCol =>
-                                {
-                                    invCol.Item().Text("INVITADO CONFIRMADO:").FontSize(9).Bold().FontColor(Colors.Grey.Darken1);
-                                    invCol.Item().Text(nombreInvitado).FontSize(16).Bold().FontColor(Colors.Black);
-                                });
-
-                            column.Item().Text("Presenta este pase el día del evento.").FontSize(9).Italic().AlignCenter();
-                        });
+                    });
                 });
-            });
-
-            return documento.GeneratePdf();
+            }).GeneratePdf();
         }
     }
 }
