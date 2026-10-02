@@ -1,0 +1,82 @@
+﻿@model IEnumerable<InvitacionDigital.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Lista de Confirmados";
+
+    // 1. Total de asistentes que ya registraron su nombre
+    int totalGeneralConfirmados = Model
+        .SelectMany(f => f.Invitados)
+        .Count(i => !string.IsNullOrWhiteSpace(i.NombreCompleto));
+
+    // 2. Total de boletos/pases que aún no tienen nombre asignado
+    int totalGeneralPendientes = Model
+        .SelectMany(f => f.Invitados)
+        .Count(i => string.IsNullOrWhiteSpace(i.NombreCompleto));
+
+    // 3. Total general de boletos asignados a estas familias
+    int totalBoletos = totalGeneralConfirmados + totalGeneralPendientes;
+}
+
+<div class="sm:max-w-[600px] w-full mx-auto px-4 flex flex-col gap-10">
+    <div class="flex items-center gap-3 justify-between">
+        <a href="@Url.Action("Index","Dashboard")" class="text-arena font-medium text-xs flex  items-center gap-1">
+            <svg class="fill-current w-3" viewBox="0 0 640 640">
+                <path d="M41.4 342.6C28.9 330.1 28.9 309.8 41.4 297.3L169.4 169.3C178.6 160.1 192.3 157.4 204.3 162.4C216.3 167.4 224 179.1 224 192L224 256L560 256C586.5 256 608 277.5 608 304L608 336C608 362.5 586.5 384 560 384L224 384L224 448C224 460.9 216.2 472.6 204.2 477.6C192.2 482.6 178.5 479.8 169.3 470.7L41.3 342.7z"/>
+            </svg>
+            Atras
+        </a>
+        <h3 class="xs:text-4xl text-3xl text-center font-bold text-arena leading-125">Familias e Invitados Confirmados</h3>
+        <div class="w-[47px]"></div>
+    </div>
+    <div class="flex flex-col gap-5">         
+        <div class="grid grid-cols-3 gap-4 ">
+            
+            <!-- Confirmados -->
+            <div class="p-4 rounded-xl  ">
+                <p class="text-center font-extrabold text-3xl text-salvia">@totalGeneralConfirmados</p>
+                <p class="text-xxxs font-semibold text-salvia uppercase tracking-wider text-center"><i>Confirmados</i></p>
+            </div>
+
+            <!-- Pendientes / No Confirmados -->
+            <div class="p-4 rounded-xl">
+                <p class="text-center font-extrabold text-3xl text-arena">@totalGeneralPendientes</p>
+                <p class="text-xxxs font-semibold text-arena uppercase tracking-wider text-center"><i>Boletos sin Asignar</i></p>
+            </div>
+
+            <!-- Total de Boletos -->
+            <div class="p-4 rounded-xl ">
+                <p class="text-center font-extrabold text-3xl text-gris-500">@totalBoletos</p>
+                <p class="text-xxxs font-semibold text-gris-500 uppercase tracking-wider text-center"><i>Total de Boletos</i></p>
+            </div>
+
+        </div>
+        <div class="grid gap-4 w-full">
+            @foreach (var familia in Model)
+            {
+                <!-- Obtenemos solo los invitados con nombre completo -->
+                var invitadosConfirmados = familia.Invitados.Where(i => !string.IsNullOrWhiteSpace(i.NombreCompleto)).ToList();
+
+                <div class="p-5 bg-marfil-2 border border-arena rounded-2xl shadow-sm">
+                    <div class="flex justify-between items-center mb-3">
+                        <h3 class="font-bold text-lg text-arena">Familia @familia.NombreFamilia</h3>
+                        <span class="text-xs bg-salvia/10 text-salvia px-2.5 py-1 rounded-full font-semibold text-center">
+                            @invitadosConfirmados.Count de @familia.CantidadBoletos confirmados
+                        </span>
+                    </div>
+
+                    <ul class="space-y-2 divide-y divide-gray-100">
+                        @foreach (var invitado in invitadosConfirmados)
+                        {
+                            <li class="pt-2 text-sm  flex items-center gap-2">
+                                <svg class="w-4 h-4 text-salvia shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
+                                <span>@invitado.NombreCompleto</span>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+</div>

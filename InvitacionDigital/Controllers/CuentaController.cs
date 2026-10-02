@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using InvitacionDigital.Models;
+using InvitacionDigital.Services;
 
 namespace InvitacionDigital.Controllers
 {
@@ -100,6 +101,36 @@ namespace InvitacionDigital.Controllers
             TempData["Exito"] = "Los invitados han sido registrados con éxito. Si deseas cambiar un invitado, comunícate con los novios.";
 
             return RedirectToAction("Index");
+        }
+
+        // GET: /Cuenta/DescargarBoleto/5
+        [HttpGet]
+        public async Task<IActionResult> DescargarBoleto(int id)
+        {
+            // Obtener usuario autenticado desde Claims
+            var userIdClaim = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            if (!int.TryParse(userIdClaim, out int usuarioId))
+            {
+                return RedirectToAction("InicioSesion", "Autentificacion");
+            }
+
+            // Buscar el boleto/invitado verificando que pertenezca a la familia logueada
+            var invitado = await _context.Invitados
+                .Include(i => i.Usuario)
+                .FirstOrDefaultAsync(i => i.Id == id && i.UsuarioId == usuarioId);
+
+            if (invitado == null || string.IsNullOrWhiteSpace(invitado.NombreCompleto))
+            {
+                TempData["Error"] = "Boleto no encontrado o aún no ha sido confirmado con un nombre.";
+                return RedirectToAction("Index");
+            }
+
+            // Generar el archivo PDF
+            byte[] pdfBytes = BoletoPdfService.GenerarBoletoPdf(invitado.Usuario.NombreFamilia, invitado.NombreCompleto);
+
+            // Retornar archivo PDF para descarga en el navegador
+            string nombreArchivo = $"Boleto_{invitado.NombreCompleto.Replace(" ", "_")}.pdf";
+            return File(pdfBytes, "application/pdf", nombreArchivo);
         }
     }
 }

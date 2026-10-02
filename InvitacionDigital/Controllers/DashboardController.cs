@@ -233,5 +233,20 @@ namespace InvitacionDigital.Controllers
             TempData["Exito"] = $"La familia '{familia.NombreFamilia}' fue eliminada correctamente.";
             return RedirectToAction("Index");
         }
+
+        // GET: /Dashboard/ListaConfirmados
+        [HttpGet]
+        public async Task<IActionResult> ListaConfirmados()
+        {
+            // Consultamos únicamente las familias que tienen al menos un invitado con nombre registrado/confirmado
+            var familiasConfirmadas = await _context.Usuarios
+                .Include(u => u.Invitados)
+                .Where(u => u.Rol == "Invitado"
+                         && u.Invitados.Any(i => !string.IsNullOrWhiteSpace(i.NombreCompleto)))
+                .OrderBy(u => u.NombreFamilia)
+                .ToListAsync();
+
+            return View(familiasConfirmadas);
+        }
     }
 }
