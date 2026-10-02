@@ -1,0 +1,149 @@
+@tailwind base;
+@tailwind components;
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable !important;
+}
+
+body {
+    @apply overflow-x-hidden text-gris-500;
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+h1,h2,h3,h4,h5,h6{
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+.text-playfair{
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+.animacion-cargando {
+    @apply fixed w-full h-screen p-0 m-0 flex justify-center items-center bg-arena/95 z-30;
+}
+
+@tailwind utilities;
+
+*::-webkit-scrollbar {
+    @apply size-2
+}
+
+*::-webkit-scrollbar-track {
+    @apply bg-marfil-1 ;
+}
+
+*::-webkit-scrollbar-thumb {
+    @apply bg-arena border-2 border-marfil-1 rounded-3xl;
+}
+
+/* Estilos para quitar flechas en inputs tipo numero en Chrome, Safari, Edge, Opera*/
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+/* Logica para quitar flechas en inputs tipo numero en Firefox*/
+input[type=number] {
+    -moz-appearance: textfield;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    -webkit-box-shadow: 0 0 0px 0px #ffffff inset;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    font-size: 16px !important;
+    box-shadow: 0 0 0 1000px #ffffff inset;
+}
+
+input:focus {
+    outline: solid 1px #000000;
+}
+
+.input {
+    @apply border rounded-lg p-2 w-full bg-marfil-1 text-base border-gris-100 focus:outline-arena font-medium h-[42px] placeholder:text-gris-100;
+}
+
+.input:disabled {
+    @apply border rounded-lg p-2 w-full bg-gris-500/10 text-gris-100 text-base cursor-not-allowed border-gris-100;
+}
+
+.label {
+    @apply text-base leading-tight font-medium
+}
+
+.select {
+    @apply border rounded-lg p-2 w-full bg-marfil-1 text-base border-gris-100 focus:outline-arena font-medium h-[42px];
+}
+
+.textarea {
+    @apply border rounded-lg p-2 w-full bg-marfil-1 text-base border-gris-100 focus:outline-arena font-medium;
+}
+.sobreNegro{
+    animation: sobre 2s infinite ;
+}
+@keyframes sobre {
+    0%{
+        width: 552px;
+    }
+    50%{
+       width: 542px;
+    }
+    100%{
+        width: 552px;
+    }
+}
+.btnSecundario{
+    @apply text-center bg-marfil-2 border-2 border-arena relative  px-8 py-3 block w-fit text-lg text-arena  hover:text-marfil-1 leading-125;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+.btnSecundario .spanbtn{
+    @apply block w-0 h-full absolute bg-arena top-0 left-0;
+    transition: all 0.3s ease-in-out;
+}
+
+.btnSecundario:hover .spanbtn{
+    @apply  w-full ;
+}
+
+
+.btnPrincipal{
+    @apply text-center bg-marfil-2 border-2 border-salvia relative  px-8 py-3 block text-lg text-salvia  hover:text-marfil-2 leading-125;
+    font-family: "Playfair Display", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    transition: all 0.3s ease-in-out;
+}
+.btnPrincipal .spanbtn{
+    @apply block w-0 h-full absolute bg-salvia top-0 left-0;
+    transition: all 0.3s ease-in-out;
+}
+
+.btnPrincipal:hover .spanbtn{
+    @apply  w-full ;
+}
+.ctnModal{
+    @apply fixed top-0 w-full h-screen bg-shadow-500 z-[100] sm:items-center items-end sm:px-3;
+}
+.contenidoModal{
+    @apply bg-white w-full sm:max-w-[800px] h-full sm:max-h-[600px] max-h-[80%] rounded-t-3xl sm:rounded-b-3xl p-4 flex flex-col sm:gap-2 gap-4 overflow-y-auto transition-all ease-in-out duration-300;
+}
+.transicion{
+    transition: all 0.3s ease-in-out;
+}

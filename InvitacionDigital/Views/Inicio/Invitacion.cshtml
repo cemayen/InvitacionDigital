@@ -1,0 +1,266 @@
+﻿@{
+    ViewData["Title"] = "Nuestra Boda - Jennie & Cristian";
+}
+
+<section class="w-full flex flex-col gap-14">
+    <div class="sm:max-w-[600px] w-full mx-auto">
+        <img src="~/assets/imgs/sobreTexto.svg" class="w-full" alt="">
+    </div>
+    <div class="px-4 flex flex-col gap-14">
+        <img src="~/assets/imgs/decorativo.svg" class="w-full sm:max-w-[380px] max-w-[268px] mx-auto" alt="decorativo">
+        <img src="~/assets/imgs/fecha.svg" class="w-full sm:max-w-[410px] max-w-[286px] mx-auto" alt="01/MAYO/2027">
+    </div>
+    <div class="bg-arena py-14 w-full">
+        <div class="sm:max-w-[600px] w-full mx-auto px-4 flex flex-col sm:gap-14 gap-7">
+            <h3 class="sm:text-4xl text-3xl text-center text-marfil-2">Faltán</h3>
+            <div class="flex xxs:gap-4 gap-3 justify-center">
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i id="dias">0</i></p>
+                    <p class="w-fit mx-auto sm:text-base text-sm text-playfair leading-120"><i>Días</i></p>
+                </div>
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i>:</i></p>
+                </div>
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i id="horas">0</i></p>
+                    <p class="w-fit mx-auto sm:text-base text-sm text-playfair leading-120"><i>Horas</i></p>
+                </div>
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i>:</i></p>
+                </div>
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i id="minutos">0</i></p>
+                    <p class="w-fit mx-auto sm:text-base text-sm text-playfair leading-120"><i>Minutos</i></p>
+                </div>
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i>:</i></p>
+                </div>
+                <div class="w-fit text-marfil-2 flex flex-col gap-3">
+                    <p class="w-fit mx-auto text-playfair font-bold xs:text-5xl xxs:text-4xl text-3xl leading-120"><i id="segundos">0</i></p>
+                    <p class="w-fit mx-auto sm:text-base text-sm text-playfair leading-120"><i>Segundos</i></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="sm:max-w-[600px] w-full mx-auto px-4 flex flex-col gap-14">
+        <div class="flex flex-col">
+            <div class="grid grid-cols-3 gap-6 ">
+                <div>
+                    <img src="~/assets/imgs/flor.svg" class="w-full max-w-40 mr-auto mt-10" alt="">
+                </div>
+                <div>
+                    <img src="~/assets/imgs/flor3.svg" class="w-full max-w-32 mx-auto" alt="">
+                </div>
+                <div>
+                    <img src="~/assets/imgs/flor.svg" class="w-full max-w-40 ml-auto mt-10 scale-x-[-1]" alt="">
+                </div>
+            </div>
+            <div class="flex flex-col gap-5 w-10/12 mx-auto relative">
+                <div class="">    
+                    <div class="swiper carruselMarcoPrincipal border-4 border-marfil-1  rounded-t-full">
+                        <div class="swiper-wrapper">
+                            @for(int j = 1; j <= 5; j++)
+                            {    
+                                <div class="swiper-slide bg-marfil-2">
+                                    <img src="https://placehold.co/500x750" class="w-full rounded-t-full" alt="@j">
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="swiper carruselMarcoMiniatura">
+                            <div class="swiper-wrapper">
+                                @for(int i = 1; i <= 5; i++)
+                                {
+                                    <div class="swiper-slide  cursor-pointer opacity-60 [&.swiper-slide-thumb-active]:opacity-100 transition-opacity">
+                                        <img src="https://placehold.co/500x500" alt="@i">
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-10">
+            <h2 class="text-center text-arena sm:text-4xl text-3xl leading-125">Nuestro Mejor Viaje <br> Empieza Hoy</h2>
+            <div class="flex flex-col gap-5">
+                <p class="sm:text-left text-center">
+                    De la brisa de Coatzacoalcos al corazón de la CDMX, nuestros caminos se cruzaron para empezar 
+                    la mayor aventura de nuestras vidas. Entre risas, complicidad y sueños compartidos, descubrimos 
+                    que el mejor destino siempre es estar juntos.
+                </p>
+                <p class="sm:text-left text-center">
+                    Hoy, listos para iniciar la expedición más importante y decir ¡Sí, acepto!, queremos que seas 
+                    parte del comienzo de nuestro para siempre.
+                </p>
+            </div>
+        </div>
+        <img src="~/assets/imgs/decorativo.svg" class="w-full sm:max-w-[380px] max-w-[268px] mx-auto" alt="decorativo">
+        <div class="flex flex-col gap-10">
+            <h2 class="text-center text-arena sm:text-4xl text-3xl leading-125">Con la bendición de Dios <br class="xs:block hidden"> y de nuestros padres.</h2>
+            <div class="flex flex-col gap-5">
+                <p class="sm:text-left text-center">
+                    Tenemos el honor y la alegría de invitarte a compartir con nosotros 
+                    uno de los días más importantes de nuestras vidas.
+                </p>
+                <p class="sm:text-left text-center">
+                    Queremos celebrar este nuevo comienzo rodeados de las personas que amamos, 
+                    y sería un verdadero honor contar con tu presencia en este día tan especial.
+                </p>
+            </div>
+        </div>
+        <div class="flex flex-col gap-7">
+            <div class="flex items-center w-full">
+                <div class="w-1/3">
+                    <img src="~/assets/imgs/olivo8.svg" class="xxxs:w-14 w-10 mx-auto -rotate-45" alt="">
+                </div>
+                <div class="w-2/3 flex flex-col gap-4 pl-2">
+                    <p class="sm:text-2xl text-xl text-right font-bold text-playfair text-arena"><i>Padres de la novia</i></p>
+                    <div class="flex flex-col gap-2">
+                        <p class="text-playfair text-right"><i>Francisco de Jesús Trejo</i></p>
+                        <p class="text-playfair text-right"><i>María del Carmen Lopéz Taxilaga</i></p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center w-full">
+                <div class="w-2/3 flex flex-col gap-4 pr-2">
+                    <p class="sm:text-2xl text-xl text-left font-bold text-playfair text-arena"><i>Padres del novio</i></p>
+                    <div class="flex flex-col gap-2">
+                        <p class="text-playfair text-left"><i>Alejandro Mayén Tinoco</i></p>
+                        <p class="text-playfair text-left"><i>Nancy Guadalupe Martínez Grañel</i></p>
+                    </div>
+                </div>
+                <div class="w-1/3">
+                    <img src="~/assets/imgs/olivo1.svg" class="xxxs:w-14 w-10 mx-auto rotate-45" alt="">
+                </div>
+            </div>
+
+        </div>
+        <img src="~/assets/imgs/decorativo.svg" class="w-full sm:max-w-[380px] max-w-[268px] mx-auto" alt="decorativo">
+        <div class="flex flex-col gap-10">
+            <h2 class="text-center text-arena sm:text-4xl text-3xl leading-125">El lugar</h2>
+            <img src="~/assets/imgs/salonIcono.svg" class="w-full sm:max-w-[450px] max-w-[301px] mx-auto" alt="">
+            <div class="flex flex-col gap-4">
+                <a href="https://maps.app.goo.gl/9N2chHKeQzCJGj9bA" target="_blank" rel="noopener noreferrer" class="text-center w-fit mx-auto sm:text-xl text-lg text-arena text-playfair font-bold"><i>Coral Clubes Santa María</i></a>
+                
+                    <a href="https://maps.app.goo.gl/9N2chHKeQzCJGj9bA" target="_blank" rel="noopener noreferrer" class="btnSecundario mx-auto">  
+                        <span class="spanbtn"></span>
+                        <p class="relative">Ver ubicación</p> 
+                    </a>
+                
+            </div>
+        </div>
+        <div class="relative">
+            <div class="swiper swiperCuadros">
+                <div class="swiper-wrapper">
+                    @for(int x = 1; x <= 5; x++)
+                    {    
+                        <div class="swiper-slide">
+                            <img src="https://placehold.co/500x600" class="w-full " alt="">
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-10">
+            <h2 class="text-center text-arena sm:text-4xl text-3xl leading-125">Codigo de vestimenta</h2>
+            <div class="relative">
+                <img src="~/assets/imgs/flor5.svg" class="absolute top-0 left-0 sm:w-32 xs:w-24 w-20" alt="">
+                <img src="~/assets/imgs/flor5.svg" class="absolute bottom-0 right-0 sm:w-32 xs:w-24 w-20 scale-x-[-1] scale-y-[-1]" alt="">
+                <img src="~/assets/imgs/vestimenta.svg" class="sm:w-52 xxxs:w-36 w-32 mx-auto relative mb-10" alt="">
+            </div>
+            <div class="flex flex-col gap-3">
+                <p class="sm:text-2xl text-xl font-bold text-playfair text-arena text-center"><i>Vestimenta Formal</i></p>
+                <p class="text-playfair text-center sm:text-lg"><i>Les pedimos de la manera más atenta no utilizar prendas en color</i></p>
+            </div>
+            <div class="w-3/5 mx-auto grid grid-cols-3 gap-4 items-center">
+                <div class="flex flex-col gap-2">
+                    <span class="block size-14 mx-auto bg-arena rounded-full"></span>
+                    <p class="text-center">Arena</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span class="block size-20 mx-auto bg-marfil-2 rounded-full border border-gris-100"></span>
+                    <p class="text-center">Blanco</p>
+                </div>
+                <div class="flex flex-col gap-2">
+                    <span class="block size-14 mx-auto bg-marfil-1 rounded-full"></span>
+                    <p class="text-center">Marfil</p>
+                </div>
+            </div>
+        </div>
+        <div class="flex flex-col gap-10">
+            <h2 class="text-center text-arena sm:text-4xl text-3xl leading-125">Mesa de regalos</h2>
+            <p class="sm:text-left text-center">
+                Tu presencia es nuestro mejor regalo. Si deseas consentirnos con un detalle adicional,
+                puedes consultar nuestra mesa de regalos
+            </p>
+            <img src="~/assets/imgs/mesaRegalos.svg" class="mx-auto w-full xs:max-w-96 max-w-[90%]" alt="">
+            <a href="" target="_blank" rel="noopener noreferrer" class="btnSecundario mx-auto">  
+                <span class="spanbtn"></span>
+                <p class="relative">Ver mesa de regalos</p> 
+            </a>
+            <div class="flex flex-col gap-7">
+                <p class="sm:text-left text-center">
+                    o apoyarnos con una aportación en efectivo para nuestro nuevo hogar
+                </p>
+                <p class="text-center underline"><b>00121215452121052</b></p>
+                <img src="~/assets/imgs/bancoVerde.svg" class="w-60 mx-auto" alt="">
+            </div>
+        </div>
+        <div class="flex flex-col gap-10">
+            <h2 class="text-center text-arena sm:text-4xl text-3xl leading-125">Confirmar asistencia</h2>
+            <p class="sm:text-left text-center">
+                Queremos compartir este día tan especial contigo. Por favor, confirma tu asistencia iniciando sesión en el siguiente enlace:
+            </p>
+            <a href="@Url.Action("InicioSesion","Autentificacion")" class="btnSecundario mx-auto">  
+                <span class="spanbtn"></span>
+                <p class="relative">Ingresar</p> 
+            </a>
+            <div class="flex justify-center pt-5 pb-16">
+                <img src="~/assets/imgs/carro.svg" class="w-full xs:max-w-80 max-w-[calc(100%-70px)]  xs:-ml-[70px] -ml-[50px]" alt="">
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script>
+        // Fecha objetivo: 1 de mayo de 2027, 00:00 hrs
+        const fechaObjetivo = new Date("2027-05-01T00:00:00").getTime();
+
+        const _dias = document.getElementById("dias");
+        const _horas = document.getElementById("horas");
+        const _minutos = document.getElementById("minutos");
+        const _segundos = document.getElementById("segundos");
+
+        function actualizarContador() {
+            const ahora = new Date().getTime();
+            const diferencia = fechaObjetivo - ahora;
+
+            // Si ya llegó la fecha, deja todo en 0 y detén el contador
+            if (diferencia <= 0) {
+                _dias.textContent = "0";
+                _horas.textContent = "0";
+                _minutos.textContent = "0";
+                _segundos.textContent = "0";
+                clearInterval(intervalo);
+                return;
+            }
+
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            _dias.textContent = dias;
+            _horas.textContent = String(horas).padStart(2, "0");
+            _minutos.textContent = String(minutos).padStart(2, "0");
+            _segundos.textContent = String(segundos).padStart(2, "0");
+        }
+
+        actualizarContador();                          // pinta de inmediato, sin esperar 1 seg
+        const intervalo = setInterval(actualizarContador, 1000);
+    </script>
+}

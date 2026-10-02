@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="es-mx" class="h-full">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Invitacion digital</title>
+    <link rel="stylesheet" href="~/css/output.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/lib/swiper-bundle.min.css" asp-append-version="true" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+</head>
+<body class="flex min-h-full flex-col overflow-x-hidden bg-marfil-2">
+    <partial name="_PartialAnimacionCargando" />
+
+    <partial name="_PartialSeccionHeader" />
+    <main role="main" class="pb-28">
+        @RenderBody()
+    </main>
+    <partial name="_PartialNotificacionGeneral" />
+    @if (User.Identity?.IsAuthenticated == true){
+        <partial name="_PartialSeccionFooter" />
+    }
+
+
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/swiper-bundle.min.js" asp-append-version="true"></script>
+    <script src="~/lib/lottie.min.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script>
+        function loaderLottie(){
+            var loaderLottie = bodymovin.loadAnimation({
+            container: document.getElementById('lottieCargando'),
+            path: '../assets/lotties/loader3.json',
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            })
+        }
+        window.onload = loaderLottie;
+        window.addEventListener("pageshow", () => {
+            const elementAnimacionCargando = document.querySelector("#elemento-animacioncargando");
+            elementAnimacionCargando.classList.add("hidden");
+            document.body.style.overflow = '';
+        });
+    </script>
+</body>
+</html>

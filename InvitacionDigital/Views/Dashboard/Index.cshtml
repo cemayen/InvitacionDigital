@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Administrar Boletos";
+}
+<section class="sm:max-w-[600px] w-full mx-auto px-4 flex flex-col gap-14">
+    <ul class="flex flex-col gap-8">
+        <li>
+            <a class="btnPrincipal" href="@Url.Action("RegistroFamilia","Dashboard")">
+                <span class="spanbtn"></span>
+                <p class="relative">Registrar Familia</p>
+            </a>
+        </li>
+        <li>
+            <a class="btnPrincipal" href="@Url.Action("ListaInvitados","Dashboard")">
+                <span class="spanbtn"></span>
+                <p class="relative">Lista de Familia</p>
+            </a>
+        </li>
+        <li>
+            <form asp-controller="Autentificacion" asp-action="CerrarSesion" method="post" class="inline">
+                <button type="submit"class="btnSecundario !w-full">
+                    <span class="spanbtn"></span>
+                    <p class="relative">Cerrar sesión</p>
+                </button>
+            </form>
+        </li>
+    </ul>
+</section>

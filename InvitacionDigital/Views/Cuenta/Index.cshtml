@@ -1,0 +1,89 @@
+﻿@model InvitacionDigital.Models.Usuario
+@{
+    ViewData["Title"] = "Registro de boletos";
+    bool edicionBloqueada = ViewBag.EdicionBloqueada ?? false;
+    bool yaRegistrados = ViewBag.YaRegistrados ?? false;
+    bool fechaExpirada = ViewBag.FechaExpirada ?? false;
+}
+<section class="sm:max-w-[600px] w-full mx-auto px-4 flex flex-col gap-14">
+    <div class="flex flex-col gap-5">
+       
+        <div class="flex flex-col gap-2  -mt-5 ">
+            <p class="text-center font-medium leading-120">
+                Bienvanidos Familia
+            </p>
+            <h3 class="text-arena text-center text-3xl leading-120">
+                @Model.NombreFamilia
+            </h3>
+            <p class="text-center font-medium text-sm leading-120 text-salvia">Tienes @Model.CantidadBoletos boletos asignados</p>
+        </div>
+    </div>
+
+    <div class="flex flex-col gap-12">
+        <form asp-action="GuardarInvitados" method="post">
+
+            <div class="flex flex-col gap-5">
+                @for (int i = 0; i < Model.Invitados.Count; i++)
+                {
+                    var invitado = Model.Invitados.ElementAt(i);
+                    <div class="flex flex-col gap-1">
+                        <label class="label">Pase @(i + 1)</label>
+                        <input type="hidden" name="invitados[@i].Id" value="@invitado.Id" />
+
+                        <input type="text"
+                            name="invitados[@i].NombreCompleto"
+                            value="@invitado.NombreCompleto"
+                            class="input"
+                            placeholder="Nombre completo del invitado"
+                            @(edicionBloqueada ? "disabled" : "") />
+                    </div>
+                }
+                @if (!edicionBloqueada)
+                {
+                    <button type="submit" class="btnPrincipal w-full mx-auto mt-5">  
+                        <span class="spanbtn"></span>
+                        <p class="relative">Confirmar</p> 
+                    </button>
+                }
+            </div>
+        </form>
+        <div class="flex flex-col gap-2">
+            @* @if (TempData["Exito"] != null)
+            {
+                <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 border border-green-200" role="alert">
+                    @TempData["Exito"]
+                </div>
+            } *@
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="p-4 mb-4 text-sm text-gris-500 rounded-lg bg-gris-500/10 border border-gris-500" role="alert">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <!-- Aviso si ya están registrados o expirados -->
+            @if (yaRegistrados)
+            {
+                <div class="p-4 text-sm text-salvia rounded-lg bg-salvia/10 border border-salvia text-center font-medium">
+                    Los invitados han sido registrados con éxito. Si deseas cambiar un invitado, comunícate con los novios.
+                </div>
+            }
+            else if (fechaExpirada)
+            {
+                <div class="p-4 text-sm text-gris-500 rounded-lg bg-gris-500/10 border border-gris-500 text-center font-medium">
+                    La fecha límite para confirmar o registrar tus pases ha expirado. Por favor comunícate con los novios.
+                </div>
+            }
+            @if (!yaRegistrados)
+            {     
+                <p class="bg-arena/10 py-1 px-3 border border-arena text-sm text-arena text-center">Tienes hasta el <b>@(Model.FechaLimite?.ToString("dd/MM/yyyy"))</b>  para registar tus boletos</p>
+                <p class="text-center font-medium text-playfair mt-1">
+                    <i>
+                        Si tienes problemas para confirmar contacta a los novios por WhatsApp
+                    </i>
+                </p>
+            }
+        </div>
+    </div>
+</section>

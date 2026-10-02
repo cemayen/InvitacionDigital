@@ -1,0 +1,60 @@
+﻿@model IEnumerable<InvitacionDigital.Models.Usuario>
+
+@{
+    ViewData["Title"] = "Lista de invitados";
+    int contador = 1;
+}
+
+<section class="sm:max-w-[600px] w-full mx-auto px-4 flex flex-col gap-14">
+    <div class="flex items-center gap-3 justify-between">
+        <a href="@Url.Action("Index","Dashboard")" class="text-arena font-medium text-xs flex  items-center gap-1">
+            <svg class="fill-current w-3" viewBox="0 0 640 640">
+                <path d="M41.4 342.6C28.9 330.1 28.9 309.8 41.4 297.3L169.4 169.3C178.6 160.1 192.3 157.4 204.3 162.4C216.3 167.4 224 179.1 224 192L224 256L560 256C586.5 256 608 277.5 608 304L608 336C608 362.5 586.5 384 560 384L224 384L224 448C224 460.9 216.2 472.6 204.2 477.6C192.2 482.6 178.5 479.8 169.3 470.7L41.3 342.7z"/>
+            </svg>
+            Atras
+        </a>
+        <h3 class="xs:text-4xl text-3xl text-center font-bold text-arena leading-125">Lista de invitados</h3>
+        <div class="w-[47px]"></div>
+    </div>
+    <div class="flex flex-col">
+        @foreach (var familia in Model)
+        {
+            var familiaJson = System.Text.Json.JsonSerializer.Serialize(new {
+                id = familia.Id,
+                nombreFamilia = familia.NombreFamilia,
+                username = familia.Username,
+                cantidadBoletos = familia.CantidadBoletos,
+                opcionCabana = familia.OpcionCabana,
+                fechaLimite = familia.FechaLimite?.ToString("yyyy-MM-dd"),
+                invitados = familia.Invitados.Select(i => new { id = i.Id, nombreCompleto = i.NombreCompleto })
+            });
+
+            <div class="flex items-center justify-between gap-4 w-full border-b border-b-arena py-5">
+                <div class="flex gap-3 items-center w-[calc(100%-40px)]">
+                    <p class="text-sm w-10 font-bold border-r border-r-arena">#@(contador++)</p>
+                    <div class="flex flex-col">
+                        <p class="font-semibold">@familia.NombreFamilia</p>
+                        <span class="text-xs text-gray-400">@familia.CantidadBoletos Boletos | Cabaña: @(familia.OpcionCabana ? "Sí" : "No")</span>
+                    </div>
+                </div>
+                
+                <!-- BOTÓN ACTUALIZADO USANDO data-familia -->
+                <button type="button"
+                        data-familia='@familiaJson'
+                        onclick="AbrirModalEditarFamilia(JSON.parse(this.dataset.familia))" 
+                        class="size-6 flex justify-center items-center cursor-pointer hover:opacity-80 transition-opacity">
+                    <svg class="size-6 fill-gris-500" viewBox="0 0 640 640">
+                        <path d="M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z"/>
+                    </svg>
+                </button>
+            </div>
+        }
+    </div>
+
+    <form id="formEliminarFamilia" asp-controller="Dashboard" asp-action="EliminarFamilia" method="post" class="hidden">
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="delete_Id" name="id" />
+    </form>
+</section>
+
+<partial name="_PartialModalEditarFamilia" />
