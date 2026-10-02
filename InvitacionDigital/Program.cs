@@ -56,9 +56,9 @@ using (var scope = app.Services.CreateScope())
     {
         var admin = new Usuario
         {
-            NombreFamilia = "Administrador",
-            Username = "admin",
-            PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"), //
+            NombreFamilia = "Mayén Trejo",
+            Username = "BodaMayenTrejo",
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword("BodaMayenTrejo1527"), //
             CantidadBoletos = 2,
             OpcionCabana = true,
             Rol = "Admin"
